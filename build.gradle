@@ -1,0 +1,40 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.6.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+jar {
+    baseName = 'consumer-spring-boot'
+    version =  '1.0.0'
+}
+
+task runApp(type: JavaExec) {
+    classpath = files('build/libs/consumer-spring-boot-{version}.jar')
+    classpath += sourceSets.main.runtimeClasspath
+    main = 'com.kk.springboot.jms.Application'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile 'org.springframework:spring-jms:4.2.1.RELEASE'
+    compile 'org.apache.activemq:activemq-broker:5.12.1'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = "2.9"
+}
